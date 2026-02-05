@@ -1,10 +1,5 @@
 # Trader Performance vs Market Sentiment Analysis
 ## Hyperliquid Trading Behavior Study
-
-**Assignment**: Data Science/Analytics Intern - Round-0  
-**Company**: Primetrade.ai  
-**Date**: February 2026
-
 ---
 
 ## Table of Contents
