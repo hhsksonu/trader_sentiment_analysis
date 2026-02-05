@@ -1,4 +1,4 @@
-Account,trade_date,sentiment_binary,daily_pnl,avg_pnl_per_trade,pnl_volatility,num_trades,total_volume,avg_trade_size,total_fees,buy_ratio,win_rate,net_pnl
+account,trade_date,sentiment_binary,daily_pnl,avg_pnl_per_trade,pnl_volatility,num_trades,total_volume,avg_trade_size,total_fees,buy_ratio,win_rate,net_pnl
 0x083384f897ee0f19899168e3b1bec365f52a9012,2024-11-11,Greed,0.0,0.0,0.0,177,900880.13,5089.718248587571,167.796055,0.0,0.0,-167.796055
 0x083384f897ee0f19899168e3b1bec365f52a9012,2024-11-17,Greed,0.0,0.0,0.0,68,542413.1799999999,7976.664411764705,67.883615,0.0,0.0,-67.883615
 0x083384f897ee0f19899168e3b1bec365f52a9012,2024-11-18,Greed,0.0,0.0,0.0,40,949380.0,23734.5,94.93798300000002,0.0,0.0,-94.93798300000002

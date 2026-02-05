@@ -8,18 +8,18 @@ from scipy.stats import mannwhitneyu
 import warnings
 warnings.filterwarnings("ignore")
 
-# CONFIG
+#config
 DATA_PATH = "../data/"
 OUTPUT_PATH = "../outputs/"
 
 SENTIMENT_FILE = "fear_greed_index.csv"
 TRADER_FILE = "historical_data.csv"
 
-# Visualization settings
+#Visualization
 plt.style.use('seaborn-v0_8-darkgrid')
 sns.set_palette("husl")
 
-# LOAD & CLEAN DATA
+#loading and cleaning
 def load_and_clean_data():
 
     print("=" * 80)
@@ -113,7 +113,7 @@ def load_and_clean_data():
 
     return merged_df, sentiment_df
 
-# DAILY METRICS
+#METRICS
 def create_daily_metrics(merged_df):
 
     print("\n" + "=" * 80)
@@ -143,7 +143,7 @@ def create_daily_metrics(merged_df):
         "total_fees"
     ]
 
-    # BUY ratio
+    #buy ratio
     buy_ratio = (
         merged_df
         .groupby(["account", "trade_date"])["side"]
@@ -151,7 +151,7 @@ def create_daily_metrics(merged_df):
         .reset_index(name="buy_ratio")
     )
 
-    # Win rate
+    #Win rate
     win_rate = (
         merged_df
         .groupby(["account", "trade_date"])["closed_pnl"]
@@ -176,14 +176,14 @@ def create_daily_metrics(merged_df):
 
     return daily_metrics
 
-# TRADER SEGMENTATION (NEW)
+#trader segmentaion
 def create_trader_segments(merged_df):
     
     print("\n" + "=" * 80)
     print("CREATING TRADER SEGMENTS")
     print("=" * 80)
     
-    # Overall trader profiles
+    #overall trader profiles
     trader_profile = merged_df.groupby("account").agg({
         "closed_pnl": ["sum", "mean", "std"],
         "size_usd": "mean",
@@ -196,7 +196,7 @@ def create_trader_segments(merged_df):
         "avg_size", "total_fees", "total_trades"
     ]
     
-    # Calculate win rate per trader
+    #calculate win rate per trader
     trader_win_rate = (
         merged_df
         .groupby("account")["closed_pnl"]
@@ -233,7 +233,7 @@ def create_trader_segments(merged_df):
     return trader_profile
 
 
-# VISUALIZATIONS (NEW)
+#visual
 def visualize_performance_comparison(daily_metrics):
     
     print("\n" + "=" * 80)
@@ -242,11 +242,11 @@ def visualize_performance_comparison(daily_metrics):
     
     fig, axes = plt.subplots(2, 2, figsize=(16, 12))
     
-    # Daily PnL Distribution
+    #daily PnL
     ax1 = axes[0, 0]
     for sentiment in ["Fear", "Greed"]:
         data = daily_metrics[daily_metrics["sentiment_binary"] == sentiment]["daily_pnl"]
-        # Filter outliers for better visualization
+        # Filter outliers
         q1, q99 = data.quantile([0.01, 0.99])
         data_filtered = data[(data >= q1) & (data <= q99)]
         ax1.hist(data_filtered, bins=50, alpha=0.6, label=sentiment, edgecolor="black")
@@ -266,7 +266,7 @@ def visualize_performance_comparison(daily_metrics):
     ax2.set_title("Win Rate Distribution: Fear vs Greed", fontsize=14, fontweight="bold")
     ax2.grid(True, alpha=0.3, axis="y")
     
-    # Average PnL per Trade
+    #average PnL per Trade
     ax3 = axes[1, 0]
     avg_pnl = daily_metrics.groupby("sentiment_binary")["avg_pnl_per_trade"].mean()
     colors = ["#FF6B6B", "#4ECDC4"]
@@ -280,7 +280,7 @@ def visualize_performance_comparison(daily_metrics):
         ax3.text(bar.get_x() + bar.get_width()/2., height,
                  f"${height:.2f}", ha="center", va="bottom" if height > 0 else "top")
     
-    # PnL Volatility
+    #Volatility
     ax4 = axes[1, 1]
     volatility = daily_metrics.groupby("sentiment_binary")["pnl_volatility"].mean()
     bars = ax4.bar(volatility.index, volatility.values, color=colors, edgecolor="black")
@@ -322,7 +322,7 @@ def visualize_behavior_comparison(daily_metrics):
     ax2.set_title("Position Sizing: Fear vs Greed", fontsize=14, fontweight="bold")
     ax2.grid(True, alpha=0.3, axis="y")
     
-    #BUY/SELL Ratio
+    #buy/sell Ratio
     ax3 = axes[1, 0]
     buy_ratio = daily_metrics.groupby("sentiment_binary")["buy_ratio"].mean()
     bars = ax3.bar(buy_ratio.index, buy_ratio.values, color=["#FF6B6B", "#4ECDC4"], edgecolor="black")
@@ -359,7 +359,7 @@ def visualize_segment_analysis(daily_metrics, trader_profile):
     
     print("Generating segment analysis visualizations...")
     
-    #Merge segments into daily metrics
+    #merge segments 
     daily_with_segments = daily_metrics.merge(
         trader_profile[["account", "volume_segment", "frequency_segment", "performance_segment"]],
         on="account",
@@ -368,7 +368,7 @@ def visualize_segment_analysis(daily_metrics, trader_profile):
     
     fig, axes = plt.subplots(1, 3, figsize=(20, 6))
     
-    #Volume Segments
+    #Volume 
     ax1 = axes[0]
     volume_pivot = daily_with_segments.groupby(["volume_segment", "sentiment_binary"])["daily_pnl"].mean().unstack()
     volume_pivot.plot(kind="bar", ax=ax1, color=["#FF6B6B", "#4ECDC4"], edgecolor="black", width=0.7)
@@ -380,7 +380,7 @@ def visualize_segment_analysis(daily_metrics, trader_profile):
     ax1.grid(True, alpha=0.3, axis="y")
     ax1.tick_params(axis="x", rotation=0)
     
-    #Frequency Segments
+    #Frequency
     ax2 = axes[1]
     freq_pivot = daily_with_segments.groupby(["frequency_segment", "sentiment_binary"])["daily_pnl"].mean().unstack()
     freq_pivot.plot(kind="bar", ax=ax2, color=["#FF6B6B", "#4ECDC4"], edgecolor="black", width=0.7)
@@ -392,7 +392,7 @@ def visualize_segment_analysis(daily_metrics, trader_profile):
     ax2.grid(True, alpha=0.3, axis="y")
     ax2.tick_params(axis="x", rotation=0)
     
-    #Performance Segments
+    #Performance 
     ax3 = axes[2]
     perf_pivot = daily_with_segments.groupby(["performance_segment", "sentiment_binary"])["daily_pnl"].mean().unstack()
     perf_pivot.plot(kind="bar", ax=ax3, color=["#FF6B6B", "#4ECDC4"], edgecolor="black", width=0.7)
@@ -410,7 +410,7 @@ def visualize_segment_analysis(daily_metrics, trader_profile):
     plt.close()
 
 
-# ENHANCED STATISTICS (IMPROVED)
+#STATISTICS
 def statistical_analysis(daily_metrics):
 
     print("\n" + "=" * 80)
@@ -448,7 +448,7 @@ def statistical_analysis(daily_metrics):
     
     return p, p_wr
 
-# KEY INSIGHTS (NEW)
+# key insight
 def generate_insights(daily_metrics, p_value, p_value_wr):
     
     print("\n" + "=" * 80)
@@ -519,7 +519,7 @@ def generate_insights(daily_metrics, p_value, p_value_wr):
     print("\n" + insights_df.to_string(index=False))
     print("\n✅ Insights saved to: key_insights.csv")
 
-# TRADING STRATEGIES (NEW)
+# trading strategies
 def generate_strategies(daily_metrics, trader_profile):
     
     print("\n" + "=" * 80)
@@ -572,14 +572,14 @@ def generate_strategies(daily_metrics, trader_profile):
     print("\n✅ Strategies saved to: trading_strategies.csv")
 
 
-# EXPORT (ENHANCED)
+#export
 def export_results(daily_metrics, trader_profile):
 
     print("\n" + "=" * 80)
     print("EXPORTING RESULTS")
     print("=" * 80)
 
-    # Daily metrics
+    #daily metrics
     daily_metrics.to_csv(
         OUTPUT_PATH + "daily_trader_metrics.csv",
         index=False
@@ -600,12 +600,11 @@ def export_results(daily_metrics, trader_profile):
     summary.to_csv(OUTPUT_PATH + "sentiment_summary.csv")
     print("✅ Saved: sentiment_summary.csv")
     
-    # Trader profiles
+    #trader profiles
     trader_profile.to_csv(OUTPUT_PATH + "trader_profiles.csv", index=False)
     print("✅ Saved: trader_profiles.csv")
 
 
-# MAIN (ENHANCED)
 def main():
 
     print("=" * 80)
@@ -613,30 +612,28 @@ def main():
     print("=" * 80)
     print("Start:", datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
 
-    # Load and clean
+    #Load and clean
     merged_df, sentiment_df = load_and_clean_data()
     
-    # Create metrics
+    #metrics
     daily_metrics = create_daily_metrics(merged_df)
     
-    # Create segments
+    #segments
     trader_profile = create_trader_segments(merged_df)
     
-    # Generate visualizations
+    #visualizations
     visualize_performance_comparison(daily_metrics)
     visualize_behavior_comparison(daily_metrics)
     visualize_segment_analysis(daily_metrics, trader_profile)
     
-    # Statistical analysis
+    #statistical analysis
     p_value, p_value_wr = statistical_analysis(daily_metrics)
     
-    # Generate insights
     generate_insights(daily_metrics, p_value, p_value_wr)
     
-    # Generate strategies
     generate_strategies(daily_metrics, trader_profile)
     
-    # Export all results
+    # Export
     export_results(daily_metrics, trader_profile)
 
     print("\n" + "=" * 80)

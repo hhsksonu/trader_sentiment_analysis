@@ -1,5 +1,5 @@
 Insight,Metric,Fear,Greed,Difference,Significance
 Performance Differential,Average Daily PnL,$5185.15,$4144.21,-20.08%,p >= 0.05
 Win Rate Differential,Average Win Rate,35.71%,36.27%,+0.57 pp,p >= 0.05
-Position Sizing Behavior,Average Trade Size,$8529.86,$5954.63,-30.19%,p >= 0.05
-Trading Activity,Trades per Day,105.36,76.91,-27.00%,p < 0.05
+Trading Activity,Trades per Day,105.36,76.91,-27.00%,Behavioral
+Position Sizing,Average Trade Size,$8529.86,$5954.63,-30.19%,Behavioral
