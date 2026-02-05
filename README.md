@@ -7,7 +7,7 @@
 
 ---
 
-## 📋 Table of Contents
+## Table of Contents
 - [Overview](#overview)
 - [Project Structure](#project-structure)
 - [Setup Instructions](#setup-instructions)
@@ -19,7 +19,7 @@
 
 ---
 
-## 🎯 Overview
+## Overview
 
 This project analyzes the relationship between Bitcoin market sentiment (Fear/Greed Index) and trader behavior/performance on the Hyperliquid platform. The goal is to uncover actionable patterns that can inform smarter trading strategies.
 
@@ -31,14 +31,14 @@ This project analyzes the relationship between Bitcoin market sentiment (Fear/Gr
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 trader_sentiment_analysis/
 │
-├── data/                                    # Data folder (not included in repo)
-│   ├── bitcoin_sentiment.csv              # Fear/Greed sentiment data
-│   └── trader_data.csv                     # Hyperliquid trader transactions
+├── data/                                    # Data folder 
+│   ├── fear_greed_index.csv              # Fear/Greed sentiment data
+│   └── historical_data.csv                     # Hyperliquid trader transactions
 │
 ├── notebooks/
 │   └── trader_sentiment_analysis.ipynb     # Main analysis notebook
@@ -60,7 +60,7 @@ trader_sentiment_analysis/
 
 ---
 
-## 🛠️ Setup Instructions
+## Setup Instructions
 
 ### Prerequisites
 - Python 3.8 or higher
@@ -93,7 +93,7 @@ pip install -r requirements.txt
 
 ---
 
-## 🔬 Methodology
+## Methodology
 
 ### Part A: Data Preparation
 
@@ -166,7 +166,7 @@ Evidence-based strategies derived from quantitative analysis, targeting specific
 
 ---
 
-## 🔑 Key Findings
+## Key Findings
 
 ### Finding 1: Performance Differential
 - **Observation**: Traders show [X]% difference in average daily PnL between Fear and Greed days
@@ -189,7 +189,7 @@ Evidence-based strategies derived from quantitative analysis, targeting specific
 
 ---
 
-## 💡 Actionable Strategies
+## Actionable Strategies
 
 ### Strategy 1: Leverage Adjustment Strategy
 **Target**: High Leverage Traders  
@@ -211,7 +211,7 @@ Evidence-based strategies derived from quantitative analysis, targeting specific
 
 ---
 
-## 🚀 Running the Analysis
+## Running the Analysis
 
 ### Option 1: Jupyter Notebook (Recommended)
 
@@ -243,7 +243,7 @@ jupyter nbconvert --to notebook --execute trader_sentiment_analysis.ipynb
 
 ---
 
-## 📊 Outputs
+## Outputs
 
 ### Visualizations
 1. **performance_fear_vs_greed.png**: PnL distribution, win rate, and volatility comparisons
@@ -260,7 +260,7 @@ jupyter nbconvert --to notebook --execute trader_sentiment_analysis.ipynb
 
 ---
 
-## 📈 Model Performance
+## Model Performance
 
 The predictive model (Random Forest) achieves:
 - **ROC-AUC**: [Score from analysis]
@@ -274,13 +274,13 @@ This model can be deployed to:
 
 ---
 
-## 🔍 Reproducibility
+## Reproducibility
 
 This analysis is fully reproducible:
-- ✅ All code is documented with clear comments
-- ✅ Random seeds set for model training (seed=42)
-- ✅ Package versions locked in requirements.txt
-- ✅ Step-by-step methodology documented
+- All code is documented with clear comments
+- Random seeds set for model training (seed=42)
+- Package versions locked in requirements.txt
+- Step-by-step methodology documented
 
 To reproduce:
 1. Follow setup instructions
@@ -289,7 +289,7 @@ To reproduce:
 
 ---
 
-## 📝 Future Enhancements
+## Future Enhancements
 
 Potential extensions of this work:
 1. **Time-series forecasting**: Predict multi-day PnL trajectories
@@ -300,7 +300,7 @@ Potential extensions of this work:
 
 ---
 
-## 🙋 Questions?
+## Questions?
 
 For any questions or clarifications, please contact:
 - Email: [Your Email]
@@ -308,16 +308,12 @@ For any questions or clarifications, please contact:
 
 ---
 
-## 📚 References
+## References
 
 - **Hyperliquid Platform**: [https://hyperliquid.xyz](https://hyperliquid.xyz)
 - **Fear & Greed Index**: [https://alternative.me/crypto/fear-and-greed-index/](https://alternative.me/crypto/fear-and-greed-index/)
 - **Scikit-learn Documentation**: [https://scikit-learn.org](https://scikit-learn.org)
 
 ---
-
-**Submission Date**: February 2026  
-**Analysis Duration**: ~3 hours  
-**Total Lines of Code**: 500+
 
 *This project demonstrates proficiency in data cleaning, exploratory analysis, statistical testing, segmentation, visualization, and predictive modeling for trading analytics.*
